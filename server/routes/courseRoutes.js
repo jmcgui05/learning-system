@@ -40,9 +40,9 @@ router.route('/courses')
 
 // /courses/:name route to get specific course and put to update
 //TODO make unique courseId and assign to Mongo _id
-router.route('/courses/:_id')
+router.route('/courses/:id')
   .get((req, res) => {
-    const query = {_id: req.params._id};
+    const query = {_id: req.params.id};
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
@@ -52,7 +52,7 @@ router.route('/courses/:_id')
     });
   })
   .put((req, res) => {
-    const query = {_id: req.params._id};
+    const query = { id: req.params.id };
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
