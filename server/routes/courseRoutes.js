@@ -22,8 +22,8 @@ router.route('/load')
         let itemised = [];
         let formatted = [];
         let tempObj = {
-          "id": 0,
-          "name": 0,
+          "_id": 0,
+          "name": "",
           "length": 0,
           "subject": ""
         };
@@ -49,7 +49,7 @@ router.route('/load')
 router.route('/courses')
   .post((req,res) => {
     let course = new Course();
-    course.id = req.body.id;
+    course._id = req.body.id;
     course.name = req.body.name;
     course.length = req.body.length;
     course.subject = req.body.subject;
@@ -77,7 +77,7 @@ router.route('/courses')
 //TODO make unique courseId and assign to Mongo _id
 router.route('/courses/:id')
   .get((req, res) => {
-    const query = { id: req.params.id };
+    const query = { _id: req.params.id };
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
@@ -87,27 +87,31 @@ router.route('/courses/:id')
     });
   })
   .put((req, res) => {
-    const query = { id: req.params.id };
+    const query = { _id: req.params.id };
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
       }
-      course.id = req.body.id;
-      course.name = req.body.name;
-      course.length = req.body.length;
-      course.subject = req.body.subject;
+      if (course) {
+        course._id = req.body.id;
+        course.name = req.body.name;
+        course.length = req.body.length;
+        course.subject = req.body.subject;
 
-      course.save((err) => {
-        if (err) {
-          res.send(err);
-        } else {
-          res.json({message: "course Updated"});
-        }
-      });
+        course.save((err) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json({message: "course Updated"});
+          }
+        });
+      } else {
+        res.json({message: "Could not find course to update"});
+      }
     });
   })
   .delete((req, res) => {
-    Course.remove({ id: req.params.id }, (err, course) => {
+    Course.remove({ _id: req.params.id }, (err, course) => {
       if (err) {
         res.send(err);
       } else {

@@ -90,6 +90,7 @@ class App extends Component {
     super();
     this.state = {
       newCourse: {},
+      searchCourse: {},
       courses: [],
       modalIsOpen: false,
       user: ""
@@ -98,6 +99,7 @@ class App extends Component {
   async componentDidMount() {
     Modal.setAppElement('body');
     const res = await axios.get('/api/load');
+    //temp workaround until bulk post is fixed
     res.data.forEach((singleCourse) => {
       axios.post('/api/courses', singleCourse);
     })
@@ -161,10 +163,12 @@ class App extends Component {
   }
 
   handleSearchCourse(field, event) {
-    event.preventDefault();
-    this.state.courses.filter((course)=> {
+    let result = this.state.courses.filter((course)=> {
       return course[field] === event.target.value;
     });
+    this.setState({
+      searchCourse: result
+    })
   }
 
   closeModal = () => {
@@ -193,7 +197,7 @@ class App extends Component {
         </Modal>
         {!modalIsOpen && user.length ? <h2>Hello: {user}</h2> : null}
         {!modalIsOpen && user.length ? courses.map((course) => {
-          return <Course key={course.id} course={course}/>
+          return <Course key={course._id} course={course}/>
         }) : null}
         <form>
           <input type="text" value={newCourse.id} placeholder="ID" onChange={(event) => this.handleCourseChange("id", event)}/>
