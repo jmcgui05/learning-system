@@ -6,9 +6,10 @@ An Application to simulate a learning system to allow create, edit, list and sea
 ## Getting Started
 
 1. Git clone this repo to your local machine
-2. Open a terminal and run mongod to run a local mongo instance
-3. Open another terminal and run npm install
-4. In this same terminal run npm run dev
+2. Checkout the dev branch
+3. Open a terminal and run mongod to run a local mongo instance
+4. Open another terminal and run npm install
+5. In this same terminal run npm run dev
 
 ## Expected Functionality
 
