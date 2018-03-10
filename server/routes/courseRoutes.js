@@ -3,45 +3,8 @@ const router = express.Router();
 const Course = require('../models/course');
 const util = require('util');
 const fs = require('fs');
-const readline = require('readline').createInterface({
-  input: fs.createReadStream(__dirname + '/courses.txt')
-});
-
+const readStream = fs.createReadStream(__dirname + '/courses.txt');
 let count = 0;
-
-function getData() {
-  return new Promise((resolve, reject) => {
-    let data = [];
-    let itemised = [];
-    let formatted = [];
-    let tempObj = {
-      "id": 0,
-      "name": 0,
-      "length": 0,
-      "subject": ""
-    };
-    readline.on('line', (line) => {
-      data.push(line);
-    });
-    readline.on('close', () => {
-      data.forEach((str) => {
-        itemised.push(str.split(' '));
-      })
-      itemised.forEach((innerArr) => {
-        while (innerArr.length > 4) {
-          innerArr[1] = `${innerArr[1]} ${innerArr.splice(2, 1)}`;
-        }
-        const obj = innerArr.reduce(function(acc, cur, i) {
-          let tempKeys = Object.keys(tempObj);
-          acc[tempKeys[i]] = cur;
-          return acc;
-        }, {});
-        formatted.push(obj);
-      });
-      return resolve(formatted);
-    });
-  })
-}
 
 router.use((req, res, next) => {
   count++;
@@ -51,12 +14,36 @@ router.use((req, res, next) => {
 
 router.route('/load')
   .get((req, res) => {
-    getData()
-      .then((result) => {
-        res.json(result);
-      })
-
-  })
+    let data = '';
+    readStream.on('data', (chunk) => {
+      data += chunk;
+    }).on('end', () => {
+        data = data.split("\n");
+        let itemised = [];
+        let formatted = [];
+        let tempObj = {
+          "id": 0,
+          "name": 0,
+          "length": 0,
+          "subject": ""
+        };
+        data.forEach((str) => {
+          itemised.push(str.split(' '));
+        })
+        itemised.forEach((innerArr) => {
+          while (innerArr.length > 4) {
+            innerArr[1] = `${innerArr[1]} ${innerArr.splice(2, 1)}`;
+          }
+          const obj = innerArr.reduce((acc, cur, i) => {
+            let tempKeys = Object.keys(tempObj);
+            acc[tempKeys[i]] = cur;
+            return acc;
+          }, {});
+          formatted.push(obj);
+        });
+        res.json(formatted);
+    });
+  });
 
 // /courses post(create new course) get(list all courses)
 router.route('/courses')

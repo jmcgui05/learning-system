@@ -10,7 +10,8 @@
     "express": "^4.16.2",
     "line-by-line": "^0.1.6",
     "mongoose": "^5.0.9",
-    "nodemon": "^1.17.1"
+    "nodemon": "^1.17.1",
+    "react-confirm-alert": "^2.0.2",
   },
   "scripts": {
     "client": "npm run start --prefix client/learning-app",
