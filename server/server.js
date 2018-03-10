@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const courseRoutes = require('./routes/courseRoutes.js');
 const config = require('../config');
+const request = require('request')
+
 
 //connect to db
 const mongoose = require('mongoose');
@@ -15,17 +17,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+
 //set port to env or 8080
 const port = process.env.PORT || 8080;
 
-//setup routes
-// const router = express.Router();
-
 //test route
 app.get('/api', ( req, res) => {
-    res.json({
-        message: 'Welcome to the Learning Application!'
-    });
+  res.json({
+    message: 'Welcome to the Learning Application!'
+  });
 });
 
 //use the imported routes
