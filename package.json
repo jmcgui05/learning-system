@@ -11,10 +11,10 @@
     "line-by-line": "^0.1.6",
     "mongoose": "^5.0.9",
     "nodemon": "^1.17.1",
-    "react-confirm-alert": "^2.0.2"
+    "request": "^2.83.0"
   },
   "scripts": {
-    "client": "npm run start --prefix client/learning-app",
+    "client": "npm run start --prefix client",
     "server": "nodemon server/server",
     "start": "nodemon server/server",
     "dev": "concurrently \"npm run server\" \"npm run client\""

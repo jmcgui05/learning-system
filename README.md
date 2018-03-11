@@ -1,27 +1,40 @@
 
 # Learning App
 
-An Application to simulate a learning system to allow create, edit, list and search of courses.
+An Full MERN stack Application to simulate a learning system to allow create, edit, list and search of courses.
+
+## Assumptions
+
+1. The initial file will always be a text file named courses.txt.
+2. Each line that represents a course will always be limited to 4 fields.
+
+## Requirements
+
+1. Node (7.2.0)
+2. Mongo
 
 ## Getting Started
 
 1. Git clone this repo to your local machine
 2. Open a terminal and run mongod to run a local mongo instance
 3. Open another terminal and run npm install
-4. In this same terminal run npm run dev
+4. To install client dependencies, run cd client, then run npm install.
+5. Run cd ..
+6. Run npm run dev
 
-## Expected Functionality
+## Learning Application Functionality
 
-1. Load the data from the provided .txt file (take name spaces into consideration)
-2. The user should be prompted for their Name
-3. After entering, the course list should be loaded and the user prompted what action they would like (add, edit, list, search)
-4.
-* Add: the program should prompt the user to add a course. Once the choice has been
-made, your program should request the user to input all the required fields for the
-course and add the course to the previously defined list.
-* Edit: the program should first list the courses and prompt the user for an id to edit. Once
-the user inputs an id, the program should prompt the user for a field to edit and an edit
-value. Then the program should update the field with the new edit.
-* List: the program should list all the courses.
-* Search: the program should take in any input and search the courses and list any
-courses with matching fields (all the fields should be searched)
+1. You will be prompted to enter your name.
+2. After submitting your name, the supplied course.txt file should load into the Course List table.
+3. Enter a Course Name, Course ID, Course Subject and Course Length, followed by clicking the Add Course button.
+4. To view an updated Course List, click List Courses.
+5. To Edit a Course, Enter the Course Id of the course to edit, and update any other field, then click Edit Course.
+6. To search for a specific course, enter a value into any of the available fields and click Search Courses.
+
+## Further Enhancements to make
+
+1. Improve reading of text file into the application.
+2. Use React client side error handling instead of alerting.
+3. Fix the bulk post of data rather than making a single request per course (current implementation is for demo purposes only).
+4. Styling must be greatly improved.
+5. Implement Redux for application state.

@@ -39,6 +39,8 @@ router.route('/load')
             acc[tempKeys[i]] = cur;
             return acc;
           }, {});
+          obj["_id"] = parseInt(obj["_id"]);
+          obj["length"] = parseInt(obj["length"]);
           formatted.push(obj);
         });
         res.json(formatted);
@@ -49,7 +51,7 @@ router.route('/load')
 router.route('/courses')
   .post((req,res) => {
     let course = new Course();
-    course._id = req.body.id;
+    course._id = req.body._id;
     course.name = req.body.name;
     course.length = req.body.length;
     course.subject = req.body.subject;
@@ -77,7 +79,7 @@ router.route('/courses')
 //TODO make unique courseId and assign to Mongo _id
 router.route('/courses/:id')
   .get((req, res) => {
-    const query = { _id: req.params.id };
+    const query = { _id: req.params._id };
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
@@ -87,13 +89,13 @@ router.route('/courses/:id')
     });
   })
   .put((req, res) => {
-    const query = { _id: req.params.id };
+    const query = { _id: req.body._id };
     Course.findOne(query, (err, course) => {
       if (err) {
         res.send(err);
       }
       if (course) {
-        course._id = req.body.id;
+        course._id = req.body._id;
         course.name = req.body.name;
         course.length = req.body.length;
         course.subject = req.body.subject;
@@ -106,12 +108,12 @@ router.route('/courses/:id')
           }
         });
       } else {
-        res.json({message: "Could not find course to update"});
+        res.json({message: "Could not find course to update."});
       }
     });
   })
   .delete((req, res) => {
-    Course.remove({ _id: req.params.id }, (err, course) => {
+    Course.remove({ _id: req.params._id }, (err, course) => {
       if (err) {
         res.send(err);
       } else {
