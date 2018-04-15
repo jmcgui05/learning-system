@@ -1,7 +1,7 @@
 
 # Learning App
 
-An Full MERN stack Application to simulate a learning system to allow create, edit, list and search of courses.
+An Full MERN stack Application to simulate a learning system to allow users to create, edit, list and search of courses. This is a toy app built to gain further exposure in React.
 
 ## Assumptions
 
